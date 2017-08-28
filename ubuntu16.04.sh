@@ -3,6 +3,10 @@
 # go to root
 cd
 
+# Install Command
+apt-get -y install ufw
+apt-get -y install sudo
+
 # Install Pritunl
 #!/bin/bash
 echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.4.list
@@ -19,7 +23,7 @@ systemctl enable pritunl mongod
 # Install Squid
 apt-get -y install squid3
 cp /etc/squid3/squid.conf /etc/squid3/squid.conf.orig
-wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/sonicyouthh/Pritunl/master/conf/squid.conf" 
+wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/dkdenza/denza1212312121/master/squid.conf" 
 MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | grep -v '192.168'`;
 sed -i s/xxxxxxxxx/$MYIP/g /etc/squid3/squid.conf;
 service squid3 restart
@@ -37,11 +41,11 @@ apt-get -y install nginx php5-fpm php5-cli
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/sonicyouthh/Pritunl/master/conf/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/dkdenza/denza1212312121/master/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<pre>Setup by MOHDKAMAL </pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/sonicyouthh/Pritunl/master/conf/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/dkdenza/denza1212312121/master/vps.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 service nginx restart
